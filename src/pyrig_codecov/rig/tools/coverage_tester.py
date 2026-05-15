@@ -3,6 +3,8 @@
 Wraps CoverageTester commands and information.
 """
 
+from pathlib import Path
+
 from pyrig.rig.tools.coverage_tester import CoverageTester as BaseCoverageTester
 from pyrig.rig.tools.package_manager import PackageManager
 from pyrig.rig.tools.version_control.version_controller import VersionController
@@ -30,7 +32,7 @@ class CoverageTester(BaseCoverageTester):
 
     def version_control_ignore_paths(self) -> tuple[str, ...]:
         """Get the paths to ignore for version control."""
-        return (*super().version_control_ignore_paths(), "coverage.xml")
+        return (*super().version_control_ignore_paths(), self.report_file().as_posix())
 
     def threshold(self) -> int:
         """Enforcing 100% coverage for packages with this plugin."""
@@ -71,4 +73,15 @@ class CoverageTester(BaseCoverageTester):
         Returns:
             Tuple containing ``--cov-report=xml``.
         """
-        return (*super().additional_args(), "--cov-report=xml")
+        return (
+            *super().additional_args(),
+            f"--cov-report={self.report_file().suffix.removeprefix('.')}",
+        )
+
+    def report_file(self) -> Path:
+        """Get the Path object for the coverage report file.
+
+        Returns:
+            Path object pointing to the coverage report file
+        """
+        return Path("coverage.xml")

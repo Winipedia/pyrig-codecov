@@ -6,6 +6,10 @@ from pyrig.rig.tools.coverage_tester import CoverageTester
 class TestCoverageTester:
     """Test class."""
 
+    def test_report_file(self) -> None:
+        """Test method."""
+        raise NotImplementedError
+
     def test_version_control_ignore_paths(self) -> None:
         """Test method."""
         assert "coverage.xml" in CoverageTester.I.version_control_ignore_paths()
