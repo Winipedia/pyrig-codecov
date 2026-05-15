@@ -8,19 +8,24 @@ class TestCoverageTester:
 
     def test_badge_urls(self) -> None:
         """Test method."""
-        raise NotImplementedError
+        badge, url = CoverageTester.I.badge_urls()
+        assert badge.startswith("https://codecov.io/gh/")
+        assert badge.endswith("/graph/badge.svg")
+        assert url.startswith("https://codecov.io/gh/")
 
     def test_remote_coverage_url(self) -> None:
         """Test method."""
-        raise NotImplementedError
+        url = CoverageTester.I.remote_coverage_url()
+        assert url.startswith("https://codecov.io/gh/")
 
     def test_access_token_key(self) -> None:
         """Test method."""
-        raise NotImplementedError
+        assert CoverageTester.I.access_token_key() == "CODECOV_TOKEN"
 
     def test_additional_args(self) -> None:
         """Test method."""
-        raise NotImplementedError
+        args = CoverageTester.I.additional_args()
+        assert "--cov-report=xml" in args
 
     def test_threshold(self) -> None:
         """Test method."""
