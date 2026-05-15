@@ -1186,7 +1186,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pyrig", specifier = ">=11.14.0" }]
+requires-dist = [{ name = "pyrig", specifier = ">=11.15.0" }]
 
 [package.metadata.requires-dev]
 dev = [
