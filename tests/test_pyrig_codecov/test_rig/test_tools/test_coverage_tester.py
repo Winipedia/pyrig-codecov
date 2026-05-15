@@ -1,5 +1,7 @@
 """Test module."""
 
+from pathlib import Path
+
 from pyrig.rig.tools.coverage_tester import CoverageTester
 
 
@@ -8,7 +10,7 @@ class TestCoverageTester:
 
     def test_report_file(self) -> None:
         """Test method."""
-        raise NotImplementedError
+        assert CoverageTester.I.report_file() == Path("coverage.xml")
 
     def test_version_control_ignore_paths(self) -> None:
         """Test method."""
