@@ -1,6 +1,6 @@
 """Test module."""
 
-from pyrig_codecov.rig.configs.version_control.ignore import (
+from pyrig.rig.configs.version_control.ignore import (
     VersionControllerIgnoreConfigFile,
 )
 
@@ -12,5 +12,5 @@ class TestVersionControllerIgnoreConfigFile:
         """Test method."""
         assert (
             "coverage.xml"
-            in VersionControllerIgnoreConfigFile().additional_ignore_lines()
+            in VersionControllerIgnoreConfigFile.I.additional_ignore_lines()
         )

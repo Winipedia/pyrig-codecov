@@ -28,6 +28,10 @@ class CoverageTester(BaseCoverageTester):
             self.remote_coverage_url(),
         )
 
+    def version_control_ignore_paths(self) -> tuple[str, ...]:
+        """Get the paths to ignore for version control."""
+        return (*super().version_control_ignore_paths(), "coverage.xml")
+
     def threshold(self) -> int:
         """Enforcing 100% coverage for packages with this plugin."""
         return 100

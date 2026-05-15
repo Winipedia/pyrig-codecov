@@ -1,10 +1,14 @@
 """Test module."""
 
-from pyrig_codecov.rig.tools.coverage_tester import CoverageTester
+from pyrig.rig.tools.coverage_tester import CoverageTester
 
 
 class TestCoverageTester:
     """Test class."""
+
+    def test_version_control_ignore_paths(self) -> None:
+        """Test method."""
+        assert "coverage.xml" in CoverageTester.I.version_control_ignore_paths()
 
     def test_badge_urls(self) -> None:
         """Test method."""
@@ -29,5 +33,4 @@ class TestCoverageTester:
 
     def test_threshold(self) -> None:
         """Test method."""
-        assert CoverageTester().threshold() == 100  # noqa: PLR2004
         assert CoverageTester.I.threshold() == 100  # noqa: PLR2004
