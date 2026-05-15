@@ -36,6 +36,8 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
 
         Requires a Codecov account linked to the repository (log in at
         codecov.io with GitHub).
+        Fails the CI job if the upload fails, ensuring that coverage reports are
+        always uploaded when the health check workflow runs.
 
         Args:
             step: Additional keys to merge into the step configuration.
@@ -49,6 +51,7 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
             with_={
                 "files": CoverageTester.I.report_file().as_posix(),
                 "token": self.insert_codecov_token(),
+                "fail_ci_if_error": "true",
             },
             step=step,
         )
