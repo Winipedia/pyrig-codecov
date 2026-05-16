@@ -88,7 +88,7 @@ error-on-warning = true
 testpaths = [
     "tests",
 ]
-addopts = "--cov=pyrig_codecov --cov-report=term-missing --cov-fail-under=100 --cov-report=xml"
+addopts = "--cov=pyrig_codecov --cov-branch --cov-report=term-missing --cov-fail-under=100 --cov-report=xml"
 
 [tool.bandit.assert_used]
 skips = [
