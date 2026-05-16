@@ -33,3 +33,47 @@
 > A pyrig plugin that integrates codecov.
 
 ---
+
+## What it does
+
+Drop-in [pyrig](https://github.com/Winipedia/pyrig) plugin that wires
+[Codecov](https://codecov.io) into your project:
+
+- Enforces **100% coverage** as the pass threshold.
+- Generates `coverage.xml` alongside your normal test run.
+- Adds a Codecov upload step to the CI health-check workflow.
+- Adds `coverage.xml` to your version control ignore list.
+- Adds a Codecov badge to your README.
+
+No configuration required — installing the package is the whole setup.
+Then regenerate your pyrig configs as usual. The plugin's overrides are picked
+up automatically.
+
+## Installation
+
+```bash
+uv add pyrig-codecov
+uv run pyrig mkroot
+```
+
+## Setup
+
+Two one-time steps on the repository side:
+
+1. **Codecov Account** - Get an account on [codecov.io](https://codecov.io).
+2. **Upload Token** - Get an upload token from Codecov
+3. **Add token to repository secrets** - Add the token to your repository secrets
+on GitHub as `CODECOV_TOKEN`
+
+After that, every CI health check run uploads its coverage report to Codecov.
+
+## How it works
+
+The plugin subclasses two pyrig base classes:
+
+- **`CoverageTester`** — overrides the coverage threshold, report format,
+  badge URLs, and the auth token key.
+- **`HealthCheckWorkflowConfigFile`** — appends a
+  `codecov/codecov-action@main` step to the matrix health-check job
+
+---

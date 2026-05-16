@@ -73,3 +73,8 @@ development and testing.
 uv add pyrig-codecov --group dev
 uv run pyrig mkroot
 ```
+
+If you are using pyrig with its Github workflows, you will need a
+[Codecov](https://codecov.io) account and get an upload token there
+and add this token as `CODECOV_TOKEN` to your repository secrets.
+This is necessary for the codecov upload step in the health check workflow to work.
