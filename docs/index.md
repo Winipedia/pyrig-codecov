@@ -45,14 +45,14 @@ Drop-in [pyrig](https://github.com/Winipedia/pyrig) plugin that wires
 - Adds `coverage.xml` to your version control ignore list.
 - Adds a Codecov badge to your README.
 
-No configuration required — installing the package is the whole setup.
-Then regenerate your pyrig configs as usual. The plugin's overrides are picked
-up automatically.
+No configuration required — installing the package as a development dependency
+is the whole setup. Then regenerate your pyrig configs as usual.
+The plugin's overrides are picked up automatically.
 
 ## Installation
 
 ```bash
-uv add pyrig-codecov
+uv add --group dev pyrig-codecov
 uv run pyrig mkroot
 ```
 
