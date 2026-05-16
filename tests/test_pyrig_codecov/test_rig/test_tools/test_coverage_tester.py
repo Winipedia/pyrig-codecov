@@ -32,9 +32,9 @@ class TestCoverageTester:
         """Test method."""
         assert CoverageTester.I.access_token_key() == "CODECOV_TOKEN"
 
-    def test_additional_args(self) -> None:
+    def test_additional_test_args(self) -> None:
         """Test method."""
-        args = CoverageTester.I.additional_args()
+        args = CoverageTester.I.additional_test_args()
         assert "--cov-report=xml" in args
 
     def test_threshold(self) -> None:

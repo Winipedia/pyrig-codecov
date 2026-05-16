@@ -5,6 +5,7 @@ Wraps CoverageTester commands and information.
 
 from pathlib import Path
 
+from pyrig.core.subprocesses import Args
 from pyrig.rig.tools.coverage_tester import CoverageTester as BaseCoverageTester
 from pyrig.rig.tools.package_manager import PackageManager
 from pyrig.rig.tools.version_control.version_controller import VersionController
@@ -33,6 +34,22 @@ class CoverageTester(BaseCoverageTester):
     def version_control_ignore_paths(self) -> tuple[str, ...]:
         """Get the paths to ignore for version control."""
         return (*super().version_control_ignore_paths(), self.report_file().as_posix())
+
+    def additional_test_args(self) -> Args:
+        """Get additional pytest-cov arguments for CI test runs.
+
+        Added on top of ``additional_test_args()`` during CI execution to produce an
+        XML coverage report, which is required for uploading results to Codecov.
+
+        Returns:
+            Tuple containing ``--cov-report=xml``.
+        """
+        return Args(
+            (
+                *super().additional_test_args(),
+                f"--cov-report={self.report_file().suffix.removeprefix('.')}",
+            )
+        )
 
     def threshold(self) -> int:
         """Enforcing 100% coverage for packages with this plugin."""
@@ -63,20 +80,6 @@ class CoverageTester(BaseCoverageTester):
             'CODECOV_TOKEN'
         """
         return "CODECOV_TOKEN"
-
-    def additional_args(self) -> tuple[str, ...]:
-        """Get additional pytest-cov arguments for CI test runs.
-
-        Added on top of ``additional_args()`` during CI execution to produce an
-        XML coverage report, which is required for uploading results to Codecov.
-
-        Returns:
-            Tuple containing ``--cov-report=xml``.
-        """
-        return (
-            *super().additional_args(),
-            f"--cov-report={self.report_file().suffix.removeprefix('.')}",
-        )
 
     def report_file(self) -> Path:
         """Get the Path object for the coverage report file.

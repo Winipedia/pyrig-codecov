@@ -33,3 +33,43 @@
 > A pyrig plugin that integrates codecov.
 
 ---
+
+## What is pyrig-codecov
+
+pyrig-codecov is a plugin for [pyrig](https://github.com/Winipedia/pyrig) that
+integrates codecov into the testing workflow and enhances the code coverage reporting.
+
+## Features
+
+### Codecov Integration
+
+Integrates codecov into the health check workflow, by uploading code coverage
+reports to codecov
+
+### Codecov Badge
+
+Replaces the default code coverage badge with a codecov badge that shows the
+code coverage percentage based on the uploaded codecov reports.
+
+## Coverage Percentage
+
+Increases the mimimum code coverage percentage to 100%.
+
+## Usage
+
+To use pyrig-codecov, add it as a dependency in your pyrig project and run
+`pyrig mkroot` to generate the project structure. This will adjust all necessary
+files.
+
+```bash
+uv add pyrig-codecov
+uv run pyrig mkroot
+```
+
+You can also add pyrig-codecov as a dev dependency as it is only needed for
+development and testing.
+
+```bash
+uv add pyrig-codecov --group dev
+uv run pyrig mkroot
+```
