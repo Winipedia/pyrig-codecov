@@ -75,5 +75,3 @@ The plugin subclasses two pyrig base classes:
   badge URLs, and the auth token key.
 - **`HealthCheckWorkflowConfigFile`** — appends a
   `codecov/codecov-action@main` step to the matrix health-check job
-
----
