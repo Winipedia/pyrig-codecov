@@ -57,20 +57,12 @@ Increases the mimimum code coverage percentage to 100%.
 
 ## Usage
 
-To use pyrig-codecov, add it as a dependency in your pyrig project and run
-`pyrig mkroot` to generate the project structure. This will adjust all necessary
-files.
+To use pyrig-codecov, add it as a developemnt dependency in your pyrig project
+and run `pyrig mkroot` to generate the project structure. This will adjust all
+necessary files.
 
 ```bash
-uv add pyrig-codecov
-uv run pyrig mkroot
-```
-
-You can also add pyrig-codecov as a dev dependency as it is only needed for
-development and testing.
-
-```bash
-uv add pyrig-codecov --group dev
+uv add --group dev pyrig-codecov
 uv run pyrig mkroot
 ```
 
