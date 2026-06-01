@@ -1235,7 +1235,7 @@ wheels = [
 
 [[package]]
 name = "pyrig-codecov"
-version = "1.0.3"
+version = "1.0.4"
 source = { editable = "." }
 dependencies = [
     { name = "pyrig" },
