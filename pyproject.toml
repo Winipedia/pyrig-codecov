@@ -34,7 +34,7 @@ Issues = "https://github.com/Winipedia/pyrig-codecov/issues"
 Changelog = "https://github.com/Winipedia/pyrig-codecov/releases"
 
 [project.scripts]
-pyrig-codecov = "pyrig.rig.cli.cli:main"
+pyrig-codecov = "pyrig.rig.cli.main:main"
 
 [dependency-groups]
 dev = [
