@@ -52,6 +52,7 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
                 "files": CoverageTester.I.report_file().as_posix(),
                 "token": self.insert_codecov_token(),
                 "fail_ci_if_error": "true",
+                "skip_validation": "true",
             },
             step=step,
         )
