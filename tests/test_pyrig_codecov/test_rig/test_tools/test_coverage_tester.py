@@ -8,6 +8,15 @@ from pyrig.rig.tools.coverage_tester import CoverageTester
 class TestCoverageTester:
     """Test class."""
 
+    def test_image_url(self) -> None:
+        """Test method."""
+        assert CoverageTester.I.image_url().startswith("https://codecov.io/gh/")
+        assert CoverageTester.I.image_url().endswith("/graph/badge.svg")
+
+    def test_link_url(self) -> None:
+        """Test method."""
+        assert CoverageTester.I.link_url().startswith("https://codecov.io/gh/")
+
     def test_report_file(self) -> None:
         """Test method."""
         assert CoverageTester.I.report_file() == Path("coverage.xml")
@@ -15,13 +24,6 @@ class TestCoverageTester:
     def test_version_control_ignore_paths(self) -> None:
         """Test method."""
         assert "coverage.xml" in CoverageTester.I.version_control_ignore_paths()
-
-    def test_badge_urls(self) -> None:
-        """Test method."""
-        badge, url = CoverageTester.I.badge_urls()
-        assert badge.startswith("https://codecov.io/gh/")
-        assert badge.endswith("/graph/badge.svg")
-        assert url.startswith("https://codecov.io/gh/")
 
     def test_remote_coverage_url(self) -> None:
         """Test method."""

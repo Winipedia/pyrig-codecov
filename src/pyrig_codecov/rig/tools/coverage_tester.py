@@ -14,22 +14,25 @@ from pyrig.rig.tools.version_control.version_controller import VersionController
 class CoverageTester(BaseCoverageTester):
     """Overrides the base CoverageTester from pyrig."""
 
-    def badge_urls(self) -> tuple[str, str]:
-        """Get the Codecov badge image URL and dashboard URL.
-
-        The badge image URL points to an SVG coverage badge on Codecov's CDN
-        scoped to the default branch. The dashboard URL is the Codecov project
-        page for the current repository.
+    def image_url(self) -> str:
+        """Get the URL for the coverage badge image.
 
         Returns:
-            Tuple of (badge_image_url, dashboard_url), where badge_image_url
-            is the SVG badge URL including the default branch, and dashboard_url
-            is the Codecov project dashboard URL.
+            URL string for the coverage badge image.
         """
-        return (
-            f"{self.remote_coverage_url()}/branch/{VersionController.I.default_branch()}/graph/badge.svg",
+        remote_url, branch = (
             self.remote_coverage_url(),
+            VersionController.I.default_branch(),
         )
+        return f"{remote_url}/branch/{branch}/graph/badge.svg"
+
+    def link_url(self) -> str:
+        """Get the URL for the coverage badge link.
+
+        Returns:
+            URL string for the coverage badge link, the Codecov project dashboard.
+        """
+        return self.remote_coverage_url()
 
     def version_control_ignore_paths(self) -> tuple[str, ...]:
         """Get the paths to ignore for version control."""
