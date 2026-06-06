@@ -23,6 +23,7 @@ class TestHealthCheckWorkflowConfigFile:
                 "files": "coverage.xml",
                 "token": "${{ secrets.CODECOV_TOKEN }}",  # nosec: B105
                 "fail_ci_if_error": "true",
+                "skip_validation": "true",
             },
         }
 
