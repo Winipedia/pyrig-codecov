@@ -18,7 +18,8 @@
 [![MarkdownLinter](https://img.shields.io/badge/markdown-rumdl-darkgreen)](https://github.com/rvben/rumdl)
 [![TypeChecker](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ty/main/assets/badge/v0.json)](https://github.com/astral-sh/ty)
 <!-- project-info -->
-[![ProgrammingLanguage](https://img.shields.io/badge/Language-Python-3776AB?logo=python&logoColor=white)](https://www.python.org)
+[![PackageIndex](https://img.shields.io/pypi/v/pyrig-codecov?logo=pypi&logoColor=white)](https://pypi.org/project/pyrig-codecov)
+[![ProgrammingLanguage](https://img.shields.io/pypi/pyversions/pyrig-codecov)](https://www.python.org)
 [![License](https://img.shields.io/github/license/Winipedia/pyrig-codecov)](https://github.com/Winipedia/pyrig-codecov/blob/main/LICENSE)
 <!-- testing -->
 [![ProjectTester](https://img.shields.io/badge/tested%20with-pytest-46a2f1.svg?logo=pytest)](https://pytest.org)
