@@ -39,13 +39,15 @@ class CoverageTester(BaseCoverageTester):
         return (*super().version_control_ignore_paths(), self.report_file().as_posix())
 
     def additional_test_args(self) -> Args:
-        """Get additional pytest-cov arguments for CI test runs.
+        """Get pytest-cov arguments, extended with an XML coverage report.
 
-        Added on top of ``additional_test_args()`` during CI execution to produce an
-        XML coverage report, which is required for uploading results to Codecov.
+        Extends the base arguments (added to ``[tool.pytest.ini_options] addopts``
+        in ``pyproject.toml``, so they apply to every ``pytest`` invocation) with
+        ``--cov-report=xml`` so that a ``coverage.xml`` report is produced on each
+        test run. This report is required for uploading results to Codecov in CI.
 
         Returns:
-            Tuple containing ``--cov-report=xml``.
+            The base arguments plus ``--cov-report=xml``.
         """
         return Args(
             (
