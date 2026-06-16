@@ -63,7 +63,7 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         Returns:
             GitHub Actions expression for the ``CODECOV_TOKEN`` secret.
         """
-        return self.insert_var(self.codecov_token_var())
+        return self.insert_expression(self.codecov_token_var())
 
     def codecov_token_var(self) -> str:
         """Get the raw secrets expression for ``CODECOV_TOKEN``.
