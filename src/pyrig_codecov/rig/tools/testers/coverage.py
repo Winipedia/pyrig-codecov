@@ -6,8 +6,8 @@ Wraps CoverageTester commands and information.
 from pathlib import Path
 
 from pyrig.core.subprocesses import Args
-from pyrig.rig.tools.coverage_tester import CoverageTester as BaseCoverageTester
 from pyrig.rig.tools.package_manager import PackageManager
+from pyrig.rig.tools.testers.coverage import CoverageTester as BaseCoverageTester
 from pyrig.rig.tools.version_control.version_controller import VersionController
 
 

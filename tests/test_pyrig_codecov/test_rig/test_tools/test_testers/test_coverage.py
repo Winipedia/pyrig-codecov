@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from pyrig.rig.tools.coverage_tester import CoverageTester
+from pyrig_codecov.rig.tools.testers.coverage import CoverageTester
 
 
 class TestCoverageTester:
