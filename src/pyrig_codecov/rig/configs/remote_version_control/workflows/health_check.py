@@ -2,7 +2,7 @@
 
 from typing import Any
 
-from pyrig.rig.configs.remote_version_control.workflows.health_check import (
+from pyrig_dev.rig.configs.remote_version_control.workflows.health_check import (
     HealthCheckWorkflowConfigFile as BaseHealthCheckWorkflowConfigFile,
 )
 
