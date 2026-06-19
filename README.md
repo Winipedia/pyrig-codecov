@@ -58,7 +58,7 @@ Increases the minimum code coverage percentage to 100%.
 
 ## Usage
 
-To use pyrig-codecov, add it as a developmentt dependency in your pyrig project
+To use pyrig-codecov, add it as a development dependency in your pyrig project
 and run `pyrig sync` to generate the project structure. This will adjust all
 necessary files.
 
