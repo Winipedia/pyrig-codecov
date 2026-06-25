@@ -70,7 +70,7 @@ class CoverageTester(BaseCoverageTester):
             URL in the format ``https://codecov.io/gh/{owner}/{repo}``.
         """
         owner, repo = (
-            VersionController.I.repo_owner(check_repo_url=False),
+            VersionController.I.repo_owner(),
             PackageManager.I.project_name(),
         )
         return f"https://codecov.io/gh/{owner}/{repo}"

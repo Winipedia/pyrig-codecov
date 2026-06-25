@@ -2,6 +2,8 @@
 
 from pathlib import Path
 
+from pyrig.rig.configs.version_control.ignore import VersionControllerIgnoreConfigFile
+
 from pyrig_codecov.rig.tools.testers.coverage import CoverageTester
 
 
@@ -24,6 +26,10 @@ class TestCoverageTester:
     def test_version_control_ignore_paths(self) -> None:
         """Test method."""
         assert "coverage.xml" in CoverageTester.I.version_control_ignore_paths()
+        assert (
+            "coverage.xml"
+            in VersionControllerIgnoreConfigFile.I.additional_ignore_lines()
+        )
 
     def test_remote_coverage_url(self) -> None:
         """Test method."""
