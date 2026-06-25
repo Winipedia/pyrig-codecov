@@ -925,6 +925,7 @@ version = "1.11.0"
 source = { editable = "." }
 dependencies = [
     { name = "pyrig" },
+    { name = "pyrig-runtime" },
 ]
 
 [package.dev-dependencies]
@@ -937,6 +938,7 @@ dev = [
     { name = "mkdocstrings", extra = ["python"] },
     { name = "pip-audit" },
     { name = "prek" },
+    { name = "pyrig" },
     { name = "pyrig-fixtures" },
     { name = "pyrig-pypi" },
     { name = "pytest" },
@@ -948,7 +950,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pyrig", specifier = ">=15.4.0" }]
+requires-dist = [
+    { name = "pyrig", specifier = ">=15.4.0" },
+    { name = "pyrig-runtime" },
+]
 
 [package.metadata.requires-dev]
 dev = [
@@ -960,6 +965,7 @@ dev = [
     { name = "mkdocstrings", extras = ["python"], specifier = ">=1.0.4" },
     { name = "pip-audit", specifier = ">=2.10.0" },
     { name = "prek", specifier = ">=0.4.0" },
+    { name = "pyrig" },
     { name = "pyrig-fixtures", specifier = ">=0.8.0" },
     { name = "pyrig-pypi", specifier = ">=1.0.0" },
     { name = "pytest", specifier = ">=9.0.3" },
