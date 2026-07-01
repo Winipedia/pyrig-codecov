@@ -50,10 +50,8 @@ class CoverageTester(BaseCoverageTester):
             The base arguments plus ``--cov-report=xml``.
         """
         return Args(
-            (
-                *super().additional_test_args(),
-                f"--cov-report={self.report_file().suffix.removeprefix('.')}",
-            )
+            *super().additional_test_args(),
+            f"--cov-report={self.report_file().suffix.removeprefix('.')}",
         )
 
     def threshold(self) -> int:
