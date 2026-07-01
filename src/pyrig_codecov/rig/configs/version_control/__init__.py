@@ -1,1 +1,1 @@
-"""Package initialization."""
+"""Codecov customizations for generated version-control configuration."""

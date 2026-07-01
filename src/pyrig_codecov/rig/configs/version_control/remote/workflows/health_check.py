@@ -1,4 +1,4 @@
-"""GitHub Actions workflow generator for the health check CI stage."""
+"""Codecov integration for the health check CI workflow."""
 
 from typing import Any
 
@@ -10,17 +10,14 @@ from pyrig_codecov.rig.tools.testers.coverage import CoverageTester
 
 
 class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
-    """Overrides the base class methods to customize the health check workflow."""
+    """Health check workflow extended with a Codecov coverage upload step."""
 
     def steps_matrix_health_checks(self) -> list[dict[str, Any]]:
-        """Return the steps for the matrix health checks job.
-
-        Extends the base class steps with an additional step to upload the
-        coverage report to Codecov.
+        """Return the matrix job steps, extended with a Codecov upload step.
 
         Returns:
-            List of step configuration dicts for the matrix health checks job,
-            including the Codecov upload step.
+            The base class steps plus a final step that uploads the
+            coverage report to Codecov.
         """
         return [
             *super().steps_matrix_health_checks(),
@@ -34,16 +31,17 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
     ) -> dict[str, Any]:
         """Build a step that uploads the coverage report to Codecov.
 
-        Requires a Codecov account linked to the repository (log in at
-        codecov.io with GitHub).
-        Fails the CI job if the upload fails, ensuring that coverage reports are
-        always uploaded when the health check workflow runs.
+        Fails the CI job if the upload fails.
 
         Args:
             step: Additional keys to merge into the step configuration.
 
         Returns:
-            Step using ``codecov/codecov-action@main``.
+            Step using `codecov/codecov-action@main`.
+
+        Note:
+            Requires a Codecov account linked to the repository (log in at
+            codecov.io with GitHub).
         """
         return self.step(
             step_func=self.step_upload_coverage_report,
@@ -58,17 +56,17 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         )
 
     def insert_codecov_token(self) -> str:
-        """Get the ``${{ secrets.CODECOV_TOKEN }}`` expression.
+        """Return the `${{ secrets.CODECOV_TOKEN }}` expression.
 
         Returns:
-            GitHub Actions expression for the ``CODECOV_TOKEN`` secret.
+            GitHub Actions expression for the `CODECOV_TOKEN` secret.
         """
         return self.insert_expression(self.codecov_token_var())
 
     def codecov_token_var(self) -> str:
-        """Get the raw secrets expression for ``CODECOV_TOKEN``.
+        """Return the raw secrets expression for `CODECOV_TOKEN`.
 
         Returns:
-            ``"secrets.CODECOV_TOKEN"``
+            The `"secrets.CODECOV_TOKEN"` expression string.
         """
         return self.secrets_var(CoverageTester.I.access_token_key())

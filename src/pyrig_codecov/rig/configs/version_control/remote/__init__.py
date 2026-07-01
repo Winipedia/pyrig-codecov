@@ -1,1 +1,1 @@
-"""Package initialization."""
+"""Codecov customizations for generated GitHub remote-repository configuration."""

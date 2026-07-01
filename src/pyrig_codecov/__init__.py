@@ -1,1 +1,1 @@
-"""The top-level package for the project."""
+"""Pyrig plugin that integrates Codecov coverage reporting into a project."""
