@@ -32,7 +32,7 @@
 
 ---
 
-## What it does
+## Overview
 
 Drop-in [pyrig](https://github.com/Winipedia/pyrig) plugin that wires
 [Codecov](https://codecov.io) into your project:
@@ -50,13 +50,13 @@ The plugin's overrides are picked up automatically.
 ## Installation
 
 ```bash
-uv add --group dev pyrig-codecov
+uv add pyrig-codecov --dev
 uv run pyrig sync
 ```
 
 ## Setup
 
-Two one-time steps on the repository side:
+A one-time setup on the repository side is required:
 
 1. **Codecov Account** - Get an account on [codecov.io](https://codecov.io).
 2. **Upload Token** - Get an upload token from Codecov
@@ -67,9 +67,14 @@ After that, every CI health check run uploads its coverage report to Codecov.
 
 ## How it works
 
-The plugin subclasses two pyrig base classes:
+The plugin subclasses pyrig base classes:
 
 - **`CoverageTester`** — overrides the coverage threshold, report format,
   badge URLs, and the auth token key.
 - **`HealthCheckWorkflowConfigFile`** — appends a
   `codecov/codecov-action@main` step to the matrix health-check job
+
+## API Reference
+
+For class- and method-level details, see the [API Reference](api.md), generated
+automatically from the source.

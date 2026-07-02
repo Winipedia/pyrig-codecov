@@ -32,39 +32,30 @@
 
 ---
 
-## What is pyrig-codecov
+## Overview
 
-pyrig-codecov is a plugin for [pyrig](https://github.com/Winipedia/pyrig) that
-integrates codecov into the testing workflow and enhances the code coverage reporting.
+pyrig-codecov is a [pyrig](https://github.com/Winipedia/pyrig) plugin that
+uploads your test coverage to [Codecov](https://codecov.io) and reports it on
+your project.
 
-## Features
+## What it adds
 
-### Codecov Integration
-
-Integrates codecov into the health check workflow, by uploading code coverage
-reports to codecov
-
-### Codecov Badge
-
-Replaces the default code coverage badge with a codecov badge that shows the
-code coverage percentage based on the uploaded codecov reports.
-
-## Coverage Percentage
-
-Increases the minimum code coverage percentage to 100%.
+- **Coverage upload** — a step in the CI health-check workflow that sends your
+  coverage report to Codecov.
+- **Coverage badge** — a Codecov badge showing your current coverage.
+- **100% threshold** — raises the required coverage to 100%.
 
 ## Usage
 
-To use pyrig-codecov, add it as a development dependency in your pyrig project
-and run `pyrig sync` to generate the project structure. This will adjust all
-necessary files.
-
 ```bash
-uv add --group dev pyrig-codecov
+uv add pyrig-codecov --dev
 uv run pyrig sync
 ```
 
-If you are using pyrig with its Github workflows, you will need a
-[Codecov](https://codecov.io) account and get an upload token there
-and add this token as `CODECOV_TOKEN` to your repository secrets.
-This is necessary for the codecov upload step in the health check workflow to work.
+Uploading from CI requires a `CODECOV_TOKEN` repository secret — see the
+documentation for the one-time setup.
+
+## Documentation
+
+Full documentation, including the auto-generated API reference, is available on
+the [documentation site](https://Winipedia.github.io/pyrig-codecov).
