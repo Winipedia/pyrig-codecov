@@ -44,7 +44,7 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
             codecov.io with GitHub).
         """
         return self.step(
-            step_func=self.step_upload_coverage_report,
+            self.step_upload_coverage_report,
             uses="codecov/codecov-action@main",
             with_={
                 "files": CoverageTester.I.report_file().as_posix(),
