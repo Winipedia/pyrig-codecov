@@ -15,22 +15,6 @@ class CoverageTester(BaseCoverageTester):
     badge, and raises the required coverage threshold to 100%.
     """
 
-    def image_url(self) -> str:
-        """Return the URL of the Codecov coverage badge image for the default branch."""
-        remote_url, branch = (
-            self.remote_coverage_url(),
-            VersionController.I.default_branch(),
-        )
-        return f"{remote_url}/branch/{branch}/graph/badge.svg"
-
-    def link_url(self) -> str:
-        """Return the URL of the Codecov project dashboard."""
-        return self.remote_coverage_url()
-
-    def version_control_ignore_paths(self) -> tuple[str, ...]:
-        """Return the base ignore paths plus the coverage report file."""
-        return (*super().version_control_ignore_paths(), self.report_file().as_posix())
-
     def additional_test_args(self) -> Args:
         """Return the pytest-cov CLI flags, extended with a report-format flag.
 
@@ -43,9 +27,29 @@ class CoverageTester(BaseCoverageTester):
             f"--cov-report={self.report_file().suffix.removeprefix('.')}",
         )
 
+    def image_url(self) -> str:
+        """Return the URL of the Codecov coverage badge image for the default branch."""
+        remote_url, branch = (
+            self.remote_coverage_url(),
+            VersionController.I.default_branch(),
+        )
+        return f"{remote_url}/branch/{branch}/graph/badge.svg"
+
+    def link_url(self) -> str:
+        """Return the URL of the Codecov project dashboard."""
+        return self.remote_coverage_url()
+
     def threshold(self) -> int:
         """Return `100`."""
         return 100
+
+    def version_control_ignore_paths(self) -> tuple[str, ...]:
+        """Return the base ignore paths plus the coverage report file."""
+        return (*super().version_control_ignore_paths(), self.report_file().as_posix())
+
+    def access_token_key(self) -> str:
+        """Return `'CODECOV_TOKEN'`, the env var name for the Codecov upload token."""
+        return "CODECOV_TOKEN"
 
     def remote_coverage_url(self) -> str:
         """Construct the Codecov project dashboard URL for the current repository.
@@ -61,10 +65,6 @@ class CoverageTester(BaseCoverageTester):
             PackageManager.I.project_name(),
         )
         return f"https://codecov.io/gh/{owner}/{repo}"
-
-    def access_token_key(self) -> str:
-        """Return `'CODECOV_TOKEN'`, the env var name for the Codecov upload token."""
-        return "CODECOV_TOKEN"
 
     def report_file(self) -> Path:
         """Return `Path("coverage.xml")`, the coverage report file path."""
