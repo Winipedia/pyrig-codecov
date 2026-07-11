@@ -6,7 +6,7 @@ from pyrig.rig.configs.version_control.remote.workflows.health_check import (
     HealthCheckWorkflowConfigFile as BaseHealthCheckWorkflowConfigFile,
 )
 
-from pyrig_codecov.rig.tools.testers.coverage import CoverageTester
+from pyrig_codecov.rig.tools.testing.coverage import CoverageTester
 
 
 class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):

@@ -4,7 +4,7 @@ from pathlib import Path
 
 from pyrig.rig.configs.version_control.ignore import VersionControllerIgnoreConfigFile
 
-from pyrig_codecov.rig.tools.testers.coverage import CoverageTester
+from pyrig_codecov.rig.tools.testing.coverage import CoverageTester
 
 
 class TestCoverageTester:
