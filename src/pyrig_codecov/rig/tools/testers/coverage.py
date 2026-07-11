@@ -19,12 +19,12 @@ class CoverageTester(BaseCoverageTester):
         """Return the pytest-cov CLI flags, extended with a report-format flag.
 
         Returns:
-            The base pytest-cov flags plus a `--cov-report` flag matching
-            `report_file`'s extension.
+            The base pytest-cov flags plus a `--cov-report` flag set to
+            `report_format()`.
         """
         return Args(
             *super().additional_test_args(),
-            f"--cov-report={self.report_file().suffix.removeprefix('.')}",
+            f"--cov-report={self.report_format()}",
         )
 
     def image_url(self) -> str:
@@ -67,5 +67,13 @@ class CoverageTester(BaseCoverageTester):
         return f"https://codecov.io/gh/{owner}/{repo}"
 
     def report_file(self) -> Path:
-        """Return `Path("coverage.xml")`, the coverage report file path."""
-        return Path("coverage.xml")
+        """Return the coverage report file path.
+
+        Returns:
+            `coverage.<ext>`, where `<ext>` is `report_format()`'s value.
+        """
+        return Path(f"coverage.{self.report_format()}")
+
+    def report_format(self) -> str:
+        """Return `'xml'`, the coverage report format."""
+        return "xml"

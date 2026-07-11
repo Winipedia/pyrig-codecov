@@ -10,6 +10,10 @@ from pyrig_codecov.rig.tools.testers.coverage import CoverageTester
 class TestCoverageTester:
     """Test class."""
 
+    def test_report_format(self) -> None:
+        """Test method."""
+        assert CoverageTester.I.report_format() == "xml"
+
     def test_image_url(self) -> None:
         """Test method."""
         assert CoverageTester.I.image_url().startswith("https://codecov.io/gh/")
