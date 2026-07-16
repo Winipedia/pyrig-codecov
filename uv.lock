@@ -934,7 +934,7 @@ wheels = [
 
 [[package]]
 name = "pyrig-codecov"
-version = "3.3.0"
+version = "3.4.0"
 source = { editable = "." }
 dependencies = [
     { name = "pyrig" },
@@ -954,6 +954,7 @@ dev = [
     { name = "pre-commit-hooks" },
     { name = "prek" },
     { name = "pyrig" },
+    { name = "pyrig-pypi" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "pytest-randomly" },
@@ -986,6 +987,7 @@ dev = [
     { name = "pre-commit-hooks" },
     { name = "prek" },
     { name = "pyrig" },
+    { name = "pyrig-pypi", specifier = ">=3.5.0" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "pytest-randomly" },
@@ -997,6 +999,19 @@ dev = [
     { name = "tombi" },
     { name = "ty" },
     { name = "typos" },
+]
+
+[[package]]
+name = "pyrig-pypi"
+version = "3.5.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pyrig" },
+    { name = "pyrig-runtime" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/c0/dc/fa582a70e2a02c082a18ca2b3561f4212b92f932fa11f4e9f80da1037895/pyrig_pypi-3.5.0.tar.gz", hash = "sha256:5f88bc32ee69429e110b28756ba19f4aaed6119bad138a038109382e68ec837a", size = 5023, upload-time = "2026-07-16T10:28:28.436Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/33/7a/477479704fcb6643b52ba4ba598363a5e05293bc5910e78fba5e76083b79/pyrig_pypi-3.5.0-py3-none-any.whl", hash = "sha256:edccdb68b6b22fca7d5d6b5fd82b59c87347eb08e2a73450e6f23daf47f8007d", size = 10393, upload-time = "2026-07-16T10:28:26.822Z" },
 ]
 
 [[package]]

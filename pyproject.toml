@@ -1,6 +1,6 @@
 [project]
 name = "pyrig-codecov"
-version = "3.3.0"
+version = "3.4.0"
 description = "A pyrig plugin that integrates codecov."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -13,6 +13,17 @@ authors = [
 ]
 maintainers = [
   { name = "Winipedia" },
+]
+keywords = [
+  "pyrig",
+]
+classifiers = [
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Typing :: Typed",
 ]
 dependencies = [
   "pyrig>=18.10.1",
@@ -42,6 +53,7 @@ dev = [
   "pre-commit-hooks",
   "prek",
   "pyrig",
+  "pyrig-pypi>=3.5.0",
   "pytest",
   "pytest-cov",
   "pytest-randomly",
