@@ -6,7 +6,7 @@ from pyrig.rig.configs.version_control.remote.workflows.health_check import (
     HealthCheckWorkflowConfigFile as BaseHealthCheckWorkflowConfigFile,
 )
 
-from pyrig_codecov.rig.tools.testing.coverage import CoverageTester
+from pyrig_codecov.rig.tools.testing.project import ProjectTester
 
 
 class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
@@ -47,7 +47,7 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
             self.step_upload_coverage_report,
             uses="codecov/codecov-action@main",
             with_={
-                "files": CoverageTester.I.report_file().as_posix(),
+                "files": ProjectTester.I.report_file().as_posix(),
                 "token": self.insert_codecov_token(),
                 "fail_ci_if_error": "true",
                 "skip_validation": "true",
@@ -69,4 +69,4 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         Returns:
             The `"secrets.CODECOV_TOKEN"` expression string.
         """
-        return self.secrets_var(CoverageTester.I.access_token_key())
+        return self.secrets_var(ProjectTester.I.access_token_key())
