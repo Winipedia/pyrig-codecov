@@ -1,6 +1,6 @@
 [project]
 name = "pyrig-codecov"
-version = "3.16.4"
+version = "3.16.5"
 description = "A pyrig plugin that integrates codecov."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -103,6 +103,9 @@ testpaths = [
 docstring-code-format = true
 
 [tool.ruff.lint]
+ignore = [
+  "CPY001",
+]
 select = [
   "ALL",
 ]
