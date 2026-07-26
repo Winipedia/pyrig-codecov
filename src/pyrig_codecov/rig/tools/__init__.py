@@ -1,6 +1,5 @@
 """Tool definitions and overrides contributed by this plugin.
 
-Every `Tool` subclass that this package defines or overrides is discovered
-from here, extending pyrig's tool management to cover this plugin's own
-tooling.
+This package is this plugin's discovery scope for pyrig's tool management:
+every tool this plugin defines or overrides is declared here.
 """

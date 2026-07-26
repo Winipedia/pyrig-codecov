@@ -1,4 +1,4 @@
-"""Codecov integration for the health check CI workflow."""
+"""Codecov coverage-upload step for the health check CI workflow."""
 
 from typing import Any
 
@@ -40,8 +40,8 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
             Step using `codecov/codecov-action@main`.
 
         Note:
-            Requires a Codecov account linked to the repository (log in at
-            codecov.io with GitHub).
+            The upload token always comes from a `CODECOV_TOKEN` repository
+            secret, so it must be configured for the upload to succeed.
         """
         return self.step(
             self.step_upload_coverage_report,

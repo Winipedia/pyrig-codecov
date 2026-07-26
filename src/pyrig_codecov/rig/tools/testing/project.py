@@ -12,7 +12,9 @@ class ProjectTester(BaseProjectTester):
     """Coverage tool configured for Codecov as the reporting backend.
 
     Points the coverage badge at Codecov instead of a static shields.io
-    badge, and raises the required coverage threshold to 100%.
+    badge, raises the required coverage threshold to 100%, and exposes the
+    report file, format, and upload token needed to publish results to
+    Codecov from CI.
     """
 
     def additional_args(self) -> Args:
@@ -20,7 +22,7 @@ class ProjectTester(BaseProjectTester):
 
         Returns:
             The base pytest-cov flags plus a `--cov-report` flag set to
-            `report_format()`.
+            `report_format()`'s value.
         """
         return Args(
             *super().additional_args(),
