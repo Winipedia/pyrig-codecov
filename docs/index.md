@@ -82,8 +82,8 @@ After that, every CI health check run uploads its coverage report to Codecov.
 
 The plugin subclasses pyrig base classes:
 
-- **`ProjectTester`** — overrides the coverage threshold, report format,
-  badge URLs, and the auth token key.
+- **`ProjectTester`** — overrides the coverage threshold and badge URLs, and
+  adds a report format/file and auth token key for the Codecov upload step.
 - **`HealthCheckWorkflowConfigFile`** — appends a
   `codecov/codecov-action@main` step to the matrix health-check job
 
