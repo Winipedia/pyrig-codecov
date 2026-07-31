@@ -1,6 +1,6 @@
 [project]
 name = "pyrig-codecov"
-version = "3.16.14"
+version = "3.16.15"
 description = "A pyrig plugin that integrates codecov."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -9,10 +9,10 @@ license-files = [
   "LICENSE",
 ]
 authors = [
-  { name = "Winipedia" },
+  { name = "Winipedia", email = "winipedia@gmx.de" },
 ]
 maintainers = [
-  { name = "Winipedia" },
+  { name = "Winipedia", email = "winipedia@gmx.de" },
 ]
 keywords = [
   "pyrig",
