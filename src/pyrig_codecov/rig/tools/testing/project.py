@@ -18,11 +18,11 @@ class ProjectTester(BaseProjectTester):
     """
 
     def additional_args(self) -> Args:
-        """Return the pytest-cov CLI flags, extended with a report-format flag.
+        """Return the base pytest flags, extended with a report-format flag.
 
         Returns:
-            The base pytest-cov flags plus a `--cov-report` flag set to
-            `report_format()`'s value.
+            The base pytest flags plus a `--cov-report`
+            flag set to `report_format()`'s value.
         """
         return Args(
             *super().additional_args(),
