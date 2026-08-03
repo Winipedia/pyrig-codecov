@@ -1,6 +1,6 @@
 [project]
 name = "pyrig-codecov"
-version = "3.16.21"
+version = "3.16.24"
 description = "A pyrig plugin that integrates codecov."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -90,6 +90,7 @@ addopts = [
   "--cov=pyrig_codecov",
   "--dist=worksteal",
   "--numprocesses=auto",
+  "--report-chars=a",
 ]
 filterwarnings = [
   "error",
