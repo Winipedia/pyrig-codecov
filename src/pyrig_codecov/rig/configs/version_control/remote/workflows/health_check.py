@@ -24,17 +24,10 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
             self.step_upload_coverage_report(),
         ]
 
-    def step_upload_coverage_report(
-        self,
-        *,
-        step: dict[str, Any] | None = None,
-    ) -> dict[str, Any]:
+    def step_upload_coverage_report(self) -> dict[str, Any]:
         """Build a step that uploads the coverage report to Codecov.
 
         Fails the CI job if the upload fails.
-
-        Args:
-            step: Additional keys to merge into the step configuration.
 
         Returns:
             Step using `codecov/codecov-action@main`.
@@ -52,7 +45,6 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
                 "fail_ci_if_error": "true",
                 "skip_validation": "true",
             },
-            step=step,
         )
 
     def insert_codecov_token(self) -> str:
