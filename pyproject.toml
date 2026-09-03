@@ -1,6 +1,6 @@
 [project]
 name = "pyrig-codecov"
-version = "3.16.50"
+version = "3.16.51"
 description = "A pyrig plugin that integrates codecov."
 readme = "README.md"
 requires-python = ">=3.12"
