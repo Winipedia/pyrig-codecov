@@ -24,13 +24,29 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
             self.step_upload_coverage_report(),
         ]
 
+    def codecov_action(self) -> str:
+        """Return the `codecov/codecov-action` action slug.
+
+        Returns:
+            The `"codecov/codecov-action"` action slug.
+        """
+        return "codecov/codecov-action"
+
+    def codecov_action_sha(self) -> str:
+        """Return the pinned commit SHA for `codecov/codecov-action`.
+
+        Returns:
+            Commit SHA `codecov/codecov-action` is pinned to.
+        """
+        return "fb8b3582c8e4def4969c97caa2f19720cb33a72f"  # pragma: allowlist secret
+
     def step_upload_coverage_report(self) -> dict[str, Any]:
         """Build a step that uploads the coverage report to Codecov.
 
         Fails the CI job if the upload fails.
 
         Returns:
-            Step using `codecov/codecov-action@main`.
+            Step using `codecov/codecov-action@<sha>`.
 
         Note:
             The upload token always comes from a `CODECOV_TOKEN` repository
@@ -38,7 +54,7 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         """
         return self.step(
             self.step_upload_coverage_report,
-            uses="codecov/codecov-action@main",
+            uses=f"{self.codecov_action()}@{self.codecov_action_sha()}",
             with_={
                 "files": ProjectTester.I.report_file().as_posix(),
                 "token": self.insert_codecov_token(),

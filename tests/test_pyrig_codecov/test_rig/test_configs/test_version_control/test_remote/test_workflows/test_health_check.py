@@ -13,12 +13,26 @@ class TestHealthCheckWorkflowConfigFile:
         last_step = HealthCheckWorkflowConfigFile.I.steps_matrix_health_checks()[-1]
         assert last_step["id"] == "upload-coverage-report"
 
+    def test_codecov_action(self) -> None:
+        """Test method."""
+        result = HealthCheckWorkflowConfigFile.I.codecov_action()
+        assert isinstance(result, str)
+        assert result
+
+    def test_codecov_action_sha(self) -> None:
+        """Test method."""
+        result = HealthCheckWorkflowConfigFile.I.codecov_action_sha()
+        assert isinstance(result, str)
+        assert result
+
     def test_step_upload_coverage_report(self) -> None:
         """Test method."""
+        action = HealthCheckWorkflowConfigFile.I.codecov_action()
+        sha = HealthCheckWorkflowConfigFile.I.codecov_action_sha()
         assert HealthCheckWorkflowConfigFile.I.step_upload_coverage_report() == {
             "id": "upload-coverage-report",
             "name": "Upload Coverage Report",
-            "uses": "codecov/codecov-action@main",
+            "uses": f"{action}@{sha}",
             "with": {
                 "files": "coverage.xml",
                 "token": "${{ secrets.CODECOV_TOKEN }}",  # nosec: B105
