@@ -1,6 +1,6 @@
 [project]
 name = "pyrig-codecov"
-version = "3.17.4"
+version = "3.17.6"
 description = "A pyrig plugin that integrates codecov."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -42,12 +42,14 @@ pyrig-codecov = "pyrig_runtime.rig.cli.main:main"
 
 [dependency-groups]
 dev = [
+  "actionlint-py>=1.7.12.24",
   "bandit",
   "deptry",
   "detect-secrets",
   "mkdocstrings[python]",
   "pre-commit-hooks",
   "prek",
+  "pyflakes>=3.4.0",
   "pyrig",
   "pyrig-fixtures>=2.15.0",
   "pyrig-pypi>=3.5.0",
@@ -64,6 +66,7 @@ dev = [
   "ty",
   "typos",
   "zensical>=0.0.52",
+  "zizmor>=1.30.0",
 ]
 
 [build-system]
