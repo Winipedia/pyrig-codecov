@@ -15,9 +15,10 @@ class TestHealthCheckWorkflowConfigFile:
 
     def test_codecov_action(self) -> None:
         """Test method."""
-        result = HealthCheckWorkflowConfigFile.I.codecov_action()
-        assert isinstance(result, str)
-        assert result
+        workflow = HealthCheckWorkflowConfigFile.I
+        assert workflow.codecov_action() == (
+            f"codecov/codecov-action@{workflow.codecov_action_sha()}"
+        )
 
     def test_codecov_action_sha(self) -> None:
         """Test method."""
@@ -27,12 +28,10 @@ class TestHealthCheckWorkflowConfigFile:
 
     def test_step_upload_coverage_report(self) -> None:
         """Test method."""
-        action = HealthCheckWorkflowConfigFile.I.codecov_action()
-        sha = HealthCheckWorkflowConfigFile.I.codecov_action_sha()
         assert HealthCheckWorkflowConfigFile.I.step_upload_coverage_report() == {
             "id": "upload-coverage-report",
             "name": "Upload Coverage Report",
-            "uses": f"{action}@{sha}",
+            "uses": HealthCheckWorkflowConfigFile.I.codecov_action(),
             "with": {
                 "files": "coverage.xml",
                 "token": "${{ secrets.CODECOV_TOKEN }}",  # nosec: B105
