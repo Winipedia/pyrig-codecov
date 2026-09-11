@@ -1,5 +1,8 @@
 """Test module."""
 
+from pyrig.core.resources import resource_content
+
+from pyrig_codecov.rig import resources
 from pyrig_codecov.rig.configs.version_control.remote.workflows.health_check import (
     HealthCheckWorkflowConfigFile,
 )
@@ -22,9 +25,9 @@ class TestHealthCheckWorkflowConfigFile:
 
     def test_codecov_action_sha(self) -> None:
         """Test method."""
-        result = HealthCheckWorkflowConfigFile.I.codecov_action_sha()
-        assert isinstance(result, str)
-        assert result
+        assert HealthCheckWorkflowConfigFile.I.codecov_action_sha() == (
+            resource_content("CODECOV_ACTION_SHA", resources).strip()
+        )
 
     def test_step_upload_coverage_report(self) -> None:
         """Test method."""

@@ -2,10 +2,12 @@
 
 from typing import Any
 
+from pyrig.core.resources import resource_content
 from pyrig.rig.configs.version_control.remote.workflows.health_check import (
     HealthCheckWorkflowConfigFile as BaseHealthCheckWorkflowConfigFile,
 )
 
+from pyrig_codecov.rig import resources
 from pyrig_codecov.rig.tools.testing.project import ProjectTester
 
 
@@ -38,7 +40,10 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         Returns:
             Commit SHA `codecov/codecov-action` is pinned to.
         """
-        return "fb8b3582c8e4def4969c97caa2f19720cb33a72f"  # pragma: allowlist secret
+        return resource_content(
+            self.codecov_action_sha.__name__.upper(),
+            resources,
+        ).strip()
 
     def step_upload_coverage_report(self) -> dict[str, Any]:
         """Build a step that uploads the coverage report to Codecov.
