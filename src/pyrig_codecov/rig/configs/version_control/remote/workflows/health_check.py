@@ -26,22 +26,14 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
             self.step_upload_coverage_report(),
         ]
 
-    def codecov_action(self) -> str:
-        """Return the pinned `codecov/codecov-action` action reference.
-
-        Returns:
-            The `"codecov/codecov-action@<sha>"` action reference.
-        """
-        return f"codecov/codecov-action@{self.codecov_action_sha()}"
-
-    def codecov_action_sha(self) -> str:
+    def codecov_action_ref(self) -> str:
         """Return the pinned commit SHA for `codecov/codecov-action`.
 
         Returns:
             Commit SHA `codecov/codecov-action` is pinned to.
         """
         return resource_content(
-            self.codecov_action_sha.__name__.upper(),
+            self.codecov_action_ref.__name__.upper(),
             resources,
         ).strip()
 
@@ -59,7 +51,10 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         """
         return self.step(
             self.step_upload_coverage_report,
-            uses=self.codecov_action(),
+            uses=(
+                "codecov/codecov-action",
+                self.codecov_action_ref(),
+            ),
             with_={
                 "files": ProjectTester.I.report_file().as_posix(),
                 "token": self.insert_codecov_token(),
