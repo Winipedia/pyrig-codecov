@@ -43,7 +43,7 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         Fails the CI job if the upload fails.
 
         Returns:
-            Step using `codecov/codecov-action@<sha>`.
+            Step using `codecov/codecov-action@<ref>`.
 
         Note:
             The upload token always comes from a `CODECOV_TOKEN` repository
