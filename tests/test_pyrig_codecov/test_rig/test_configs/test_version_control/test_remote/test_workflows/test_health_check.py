@@ -16,10 +16,10 @@ class TestHealthCheckWorkflowConfigFile:
         last_step = HealthCheckWorkflowConfigFile.I.steps_matrix_health_checks()[-1]
         assert last_step["id"] == "upload-coverage-report"
 
-    def test_codecov_action_ref(self) -> None:
+    def test_codecov_action(self) -> None:
         """Test method."""
-        assert HealthCheckWorkflowConfigFile.I.codecov_action_ref() == (
-            resource_content("CODECOV_ACTION_REF", resources).strip()
+        assert HealthCheckWorkflowConfigFile.I.codecov_action() == tuple(
+            resource_content("CODECOV_ACTION", resources).splitlines(),
         )
 
     def test_step_upload_coverage_report(self) -> None:
@@ -29,7 +29,7 @@ class TestHealthCheckWorkflowConfigFile:
             "name": "Upload Coverage Report",
             "uses": (
                 "codecov/codecov-action@"
-                f"{HealthCheckWorkflowConfigFile.I.codecov_action_ref()}"
+                f"{HealthCheckWorkflowConfigFile.I.codecov_action()[1]}"
             ),
             "with": {
                 "files": "coverage.xml",
