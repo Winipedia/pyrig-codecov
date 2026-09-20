@@ -66,8 +66,9 @@ uv add pyrig-codecov --dev
 uv run pyrig sync
 ```
 
-Uploading from CI requires a `CODECOV_TOKEN` repository secret — see the
-documentation for the one-time setup.
+Uploading from CI requires a `CODECOV_TOKEN` repository secret, added to both
+the Actions and Dependabot secrets — see the documentation for the one-time
+setup.
 
 ## Documentation
 

@@ -43,7 +43,9 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
 
         Note:
             The upload token always comes from a `CODECOV_TOKEN` repository
-            secret, so it must be configured for the upload to succeed.
+            secret, so it must be configured for the upload to succeed. Since
+            this workflow also runs for Dependabot pull requests, the secret
+            must be added to both the Actions and Dependabot secret stores.
         """
         return self.step(
             self.step_upload_coverage_report,

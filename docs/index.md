@@ -76,9 +76,12 @@ A one-time setup on the repository side is required:
 1. **Codecov Account** - Get an account on [codecov.io](https://codecov.io).
 2. **Upload Token** - Get an upload token from Codecov
 3. **Add token to repository secrets** - Add the token to your repository secrets
-on GitHub as `CODECOV_TOKEN`
+on GitHub as `CODECOV_TOKEN`. Add it to both the **Actions** secrets and the
+**Dependabot** secrets, since workflow runs triggered by Dependabot pull
+requests only have access to Dependabot secrets, not Actions secrets.
 
-After that, every CI health check run uploads its coverage report to Codecov.
+After that, every CI health check run - including ones triggered by
+Dependabot pull requests - uploads its coverage report to Codecov.
 
 ## How it works
 
