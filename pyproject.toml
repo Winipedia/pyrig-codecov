@@ -1,6 +1,6 @@
 [project]
 name = "pyrig-codecov"
-version = "3.17.31"
+version = "3.17.33"
 description = "A pyrig plugin that integrates codecov."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -26,8 +26,8 @@ classifiers = [
   "Typing :: Typed",
 ]
 dependencies = [
-  "pyrig>=18.10.1",
-  "pyrig-runtime",
+  "pyrig>=18.85.1",
+  "pyrig-runtime>=3.23.45",
 ]
 
 [project.urls]
@@ -42,32 +42,32 @@ pyrig-codecov = "pyrig_runtime.rig.cli.main:main"
 
 [dependency-groups]
 dev = [
-  "actionlint-py>=1.7.12.24",
-  "bandit",
-  "deptry",
-  "detect-secrets",
-  "mkdocstrings[python]",
-  "pre-commit-hooks",
-  "prek",
+  "actionlint-py>=1.7.12.25",
+  "bandit>=1.9.4",
+  "deptry>=0.25.1",
+  "detect-secrets>=1.5.0",
+  "mkdocstrings[python]>=1.0.6",
+  "pre-commit-hooks>=6.0.0",
+  "prek>=0.5.3",
   "pyflakes>=3.4.0",
-  "pyrig",
-  "pyrig-fixtures>=2.15.0",
-  "pyrig-pypi>=3.5.0",
-  "pyrig-resources>=3.13.62",
-  "pytest",
-  "pytest-cov",
-  "pytest-randomly",
+  "pyrig>=18.85.1",
+  "pyrig-fixtures>=2.24.59",
+  "pyrig-pypi>=3.20.28",
+  "pyrig-resources>=3.13.74",
+  "pytest>=9.1.1",
+  "pytest-cov>=7.1.0",
+  "pytest-randomly>=5.0.0",
   "pytest-xdist>=3.8.0",
-  "ruff",
-  "rumdl",
-  "ryl",
-  "shellcheck-py",
-  "shfmt-py",
-  "tombi",
-  "ty",
-  "typos",
-  "zensical>=0.0.52",
-  "zizmor>=1.30.0",
+  "ruff>=0.16.8",
+  "rumdl>=0.2.75",
+  "ryl>=0.22.0",
+  "shellcheck-py>=0.11.0.1",
+  "shfmt-py>=4.2.0",
+  "tombi>=1.5.5",
+  "ty>=0.0.83",
+  "typos>=1.50.2",
+  "zensical>=0.0.64",
+  "zizmor>=1.30.1",
 ]
 
 [build-system]
