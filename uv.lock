@@ -1374,6 +1374,7 @@ wheels = [
 name = "wcwidth"
 version = "0.9.1"
 source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/dc/ac/3a943d2792c9bb368aaa8b50121c0f778460ba2d7fbdc0a0366201d9e761/wcwidth-0.9.1.tar.gz", hash = "sha256:5823209b0d43af322ce698c689380d7c15ca31fa8e6e3be8459f27031bef0af5", size = 952410, upload-time = "2026-09-23T20:23:49.127Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/48/7c/130de33c0a7f6efecee28fef5711fc1f8d55ac33885a6b85f4f6689004ba/wcwidth-0.9.1-cp310-abi3-macosx_10_9_x86_64.whl", hash = "sha256:10b00ba23482e352f874d2e8135e7ace9da838646c7dd800566246bbd46125ff", size = 604219, upload-time = "2026-09-23T20:23:22.071Z" },
     { url = "https://files.pythonhosted.org/packages/33/7c/c7bb03da54de7ac5a08753e186b963f91847b04ed8ae5be136a4d5f52b75/wcwidth-0.9.1-cp310-abi3-macosx_11_0_arm64.whl", hash = "sha256:40d936d72c9bdc10df43f93a8be502bc5024b487259139f66a328722c07f34a9", size = 609038, upload-time = "2026-09-23T20:23:24.941Z" },
