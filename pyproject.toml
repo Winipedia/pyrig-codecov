@@ -1,6 +1,6 @@
 [project]
 name = "pyrig-codecov"
-version = "3.17.54"
+version = "3.17.55"
 description = "A pyrig plugin that integrates codecov."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -121,3 +121,7 @@ select = [
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+[tool.ryl.rules]
+ALL = "enable"
+key-ordering = "disable"
