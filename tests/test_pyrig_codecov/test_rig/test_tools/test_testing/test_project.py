@@ -11,9 +11,14 @@ from pyrig_codecov.rig.tools.testing.project import ProjectTester
 class TestProjectTester:
     """Test class."""
 
-    def test_report_format(self) -> None:
+    def test_access_token_key(self) -> None:
         """Test method."""
-        assert ProjectTester.I.report_format() == "xml"
+        assert ProjectTester.I.access_token_key() == "CODECOV_TOKEN"
+
+    def test_additional_args(self) -> None:
+        """Test method."""
+        args = ProjectTester.I.additional_args()
+        assert "--cov-report=xml" in args
 
     def test_image_url(self) -> None:
         """Test method."""
@@ -28,6 +33,14 @@ class TestProjectTester:
         """Test method."""
         assert ProjectTester.I.report_file() == Path("coverage.xml")
 
+    def test_report_format(self) -> None:
+        """Test method."""
+        assert ProjectTester.I.report_format() == "xml"
+
+    def test_threshold(self) -> None:
+        """Test method."""
+        assert ProjectTester.I.threshold() == 100  # noqa: PLR2004
+
     def test_version_control_ignore_patterns(self) -> None:
         """Test method."""
         assert "coverage.xml" in ProjectTester.I.version_control_ignore_patterns()
@@ -39,16 +52,3 @@ class TestProjectTester:
         patterns = ProjectTester.I.version_control_ignore_patterns()
         all_patterns = Tool.subclasses_version_control_ignore_patterns()
         assert all(pattern in all_patterns for pattern in patterns)
-
-    def test_access_token_key(self) -> None:
-        """Test method."""
-        assert ProjectTester.I.access_token_key() == "CODECOV_TOKEN"
-
-    def test_additional_args(self) -> None:
-        """Test method."""
-        args = ProjectTester.I.additional_args()
-        assert "--cov-report=xml" in args
-
-    def test_threshold(self) -> None:
-        """Test method."""
-        assert ProjectTester.I.threshold() == 100  # noqa: PLR2004

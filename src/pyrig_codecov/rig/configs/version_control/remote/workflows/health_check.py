@@ -1,6 +1,6 @@
 """Codecov coverage-upload step for the health check CI workflow."""
 
-from typing import Any
+from typing import Any, override
 
 from pyrig.rig.configs.version_control.remote.workflows.health_check import (
     HealthCheckWorkflowConfigFile as BaseHealthCheckWorkflowConfigFile,
@@ -13,6 +13,7 @@ from pyrig_codecov.rig.tools.testing.project import ProjectTester
 class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
     """Health check workflow extended with a Codecov coverage upload step."""
 
+    @override
     def steps_matrix_health_checks(self) -> list[dict[str, Any]]:
         """Return the matrix job steps, extended with a Codecov upload step.
 
@@ -24,14 +25,6 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
             *super().steps_matrix_health_checks(),
             self.step_upload_coverage_report(),
         ]
-
-    def codecov_action(self) -> tuple[str, str, str]:
-        """Return action metadata for `codecov/codecov-action`.
-
-        Returns:
-            Tuple of action name, pinned commit SHA, and release tag.
-        """
-        return self.action_from_resource(self.codecov_action, resources)
 
     def step_upload_coverage_report(self) -> dict[str, Any]:
         """Build a step that uploads the coverage report to Codecov.
@@ -57,6 +50,14 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
                 "skip_validation": "true",
             },
         )
+
+    def codecov_action(self) -> tuple[str, str, str]:
+        """Return action metadata for `codecov/codecov-action`.
+
+        Returns:
+            Tuple of action name, pinned commit SHA, and release tag.
+        """
+        return self.action_from_resource(self.codecov_action, resources)
 
     def insert_codecov_token(self) -> str:
         """Return the `${{ secrets.CODECOV_TOKEN }}` expression.

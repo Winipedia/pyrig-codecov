@@ -1,6 +1,7 @@
 """Codecov-specific coverage reporting and badge configuration."""
 
 from pathlib import Path
+from typing import override
 
 from pyrig.core.subprocesses import Args
 from pyrig.rig.tools.packages.manager import PackageManager
@@ -17,6 +18,7 @@ class ProjectTester(BaseProjectTester):
     Codecov from CI.
     """
 
+    @override
     def additional_args(self) -> Args:
         """Return the base pytest flags, extended with a report-format flag.
 
@@ -29,6 +31,7 @@ class ProjectTester(BaseProjectTester):
             f"--cov-report={self.report_format()}",
         )
 
+    @override
     def image_url(self) -> str:
         """Return the URL of the Codecov coverage badge image for the default branch."""
         remote_url, branch = (
@@ -37,6 +40,20 @@ class ProjectTester(BaseProjectTester):
         )
         return f"{remote_url}/branch/{branch}/graph/badge.svg"
 
+    @override
+    def threshold(self) -> int:
+        """Return `100`."""
+        return 100
+
+    @override
+    def version_control_ignore_patterns(self) -> tuple[str, ...]:
+        """Return the base ignore paths plus the coverage report file."""
+        return (
+            *super().version_control_ignore_patterns(),
+            self.report_file().as_posix(),
+        )
+
+    @override
     def link_url(self) -> str:
         """Return the URL of the Codecov project dashboard."""
         owner, repo = (
@@ -44,17 +61,6 @@ class ProjectTester(BaseProjectTester):
             PackageManager.I.project_name(),
         )
         return f"https://codecov.io/gh/{owner}/{repo}"
-
-    def threshold(self) -> int:
-        """Return `100`."""
-        return 100
-
-    def version_control_ignore_patterns(self) -> tuple[str, ...]:
-        """Return the base ignore paths plus the coverage report file."""
-        return (
-            *super().version_control_ignore_patterns(),
-            self.report_file().as_posix(),
-        )
 
     def access_token_key(self) -> str:
         """Return `'CODECOV_TOKEN'`, the env var name for the Codecov upload token."""

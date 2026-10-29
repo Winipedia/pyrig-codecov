@@ -12,11 +12,6 @@ from pyrig_codecov.rig.configs.version_control.remote.workflows.health_check imp
 class TestHealthCheckWorkflowConfigFile:
     """Test class."""
 
-    def test_steps_matrix_health_checks(self) -> None:
-        """Test method."""
-        last_step = HealthCheckWorkflowConfigFile.I.steps_matrix_health_checks()[-1]
-        assert last_step["id"] == "upload-coverage-report"
-
     def test_codecov_action(self) -> None:
         """Test method."""
         assert HealthCheckWorkflowConfigFile.I.codecov_action() == tuple(
@@ -28,6 +23,20 @@ class TestHealthCheckWorkflowConfigFile:
             HealthCheckWorkflowConfigFile.I.path(),
         )
 
+    def test_codecov_token_var(self) -> None:
+        """Test method."""
+        assert (
+            HealthCheckWorkflowConfigFile.I.codecov_token_var()
+            == "secrets.CODECOV_TOKEN"
+        )
+
+    def test_insert_codecov_token(self) -> None:
+        """Test method."""
+        assert (
+            HealthCheckWorkflowConfigFile.I.insert_codecov_token()
+            == "${{ secrets.CODECOV_TOKEN }}"
+        )
+
     def test_step_upload_coverage_report(self) -> None:
         """Test method."""
         step = HealthCheckWorkflowConfigFile.I.step_upload_coverage_report()
@@ -37,16 +46,7 @@ class TestHealthCheckWorkflowConfigFile:
         assert "uses" in step
         assert "with" in step
 
-    def test_insert_codecov_token(self) -> None:
+    def test_steps_matrix_health_checks(self) -> None:
         """Test method."""
-        assert (
-            HealthCheckWorkflowConfigFile.I.insert_codecov_token()
-            == "${{ secrets.CODECOV_TOKEN }}"
-        )
-
-    def test_codecov_token_var(self) -> None:
-        """Test method."""
-        assert (
-            HealthCheckWorkflowConfigFile.I.codecov_token_var()
-            == "secrets.CODECOV_TOKEN"
-        )
+        last_step = HealthCheckWorkflowConfigFile.I.steps_matrix_health_checks()[-1]
+        assert last_step["id"] == "upload-coverage-report"
