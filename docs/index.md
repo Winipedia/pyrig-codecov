@@ -77,23 +77,18 @@ uv run pyrig sync
 A one-time setup on the repository side is required:
 
 1. **Codecov Account** - Get an account on [codecov.io](https://codecov.io).
-2. **Upload Token** - Get an upload token from Codecov
-3. **Add token to repository secrets** - Add the token to your repository secrets
-on GitHub as `CODECOV_TOKEN`. Add it to both the **Actions** secrets and the
-**Dependabot** secrets, since workflow runs triggered by Dependabot pull
-requests only have access to Dependabot secrets, not Actions secrets.
-
-After that, every CI health check run - including ones triggered by
-Dependabot pull requests - uploads its coverage report to Codecov.
+2. **Connect your repository** - Enable the repository in Codecov and grant
+the Codecov GitHub App access as needed.
 
 ## How it works
 
 The plugin subclasses pyrig base classes:
 
 - **`ProjectTester`** — overrides the coverage threshold and badge URLs, and
-  adds a report format/file and auth token key for the Codecov upload step.
+  adds a report format/file for the Codecov upload step.
 - **`HealthCheckWorkflowConfigFile`** — appends a
-  `codecov/codecov-action@main` step to the matrix health-check job
+  commit-pinned `codecov/codecov-action` step to the matrix health-check job
+  and grants the job permission to request an OIDC token.
 
 ## API Reference
 

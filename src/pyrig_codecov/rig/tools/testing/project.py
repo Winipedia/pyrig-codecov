@@ -14,8 +14,7 @@ class ProjectTester(BaseProjectTester):
 
     Points the coverage badge at Codecov instead of a static shields.io
     badge, raises the required coverage threshold to 100%, and exposes the
-    report file, format, and upload token needed to publish results to
-    Codecov from CI.
+    report file and format needed to publish results to Codecov from CI.
     """
 
     @override
@@ -61,10 +60,6 @@ class ProjectTester(BaseProjectTester):
             PackageManager.I.project_name(),
         )
         return f"https://codecov.io/gh/{owner}/{repo}"
-
-    def access_token_key(self) -> str:
-        """Return `'CODECOV_TOKEN'`, the env var name for the Codecov upload token."""
-        return "CODECOV_TOKEN"
 
     def report_file(self) -> Path:
         """Return the coverage report file path.

@@ -23,18 +23,14 @@ class TestHealthCheckWorkflowConfigFile:
             HealthCheckWorkflowConfigFile.I.path(),
         )
 
-    def test_codecov_token_var(self) -> None:
+    def test_job_matrix_health_checks_permissions(self) -> None:
         """Test method."""
         assert (
-            HealthCheckWorkflowConfigFile.I.codecov_token_var()
-            == "secrets.CODECOV_TOKEN"
-        )
-
-    def test_insert_codecov_token(self) -> None:
-        """Test method."""
-        assert (
-            HealthCheckWorkflowConfigFile.I.insert_codecov_token()
-            == "${{ secrets.CODECOV_TOKEN }}"
+            HealthCheckWorkflowConfigFile.I.job_matrix_health_checks_permissions()
+            == {
+                "contents": "read",
+                "id-token": "write",
+            }
         )
 
     def test_step_upload_coverage_report(self) -> None:
@@ -45,6 +41,8 @@ class TestHealthCheckWorkflowConfigFile:
         assert "name" in step
         assert "uses" in step
         assert "with" in step
+        assert step["with"]["use_oidc"] == "true"
+        assert "token" not in step["with"]
 
     def test_steps_matrix_health_checks(self) -> None:
         """Test method."""

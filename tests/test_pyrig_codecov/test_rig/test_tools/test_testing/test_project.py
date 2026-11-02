@@ -11,10 +11,6 @@ from pyrig_codecov.rig.tools.testing.project import ProjectTester
 class TestProjectTester:
     """Test class."""
 
-    def test_access_token_key(self) -> None:
-        """Test method."""
-        assert ProjectTester.I.access_token_key() == "CODECOV_TOKEN"
-
     def test_additional_args(self) -> None:
         """Test method."""
         args = ProjectTester.I.additional_args()

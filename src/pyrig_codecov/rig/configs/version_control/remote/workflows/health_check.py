@@ -14,6 +14,14 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
     """Health check workflow extended with a Codecov coverage upload step."""
 
     @override
+    def job_matrix_health_checks_permissions(self) -> dict[str, Any]:
+        """Return matrix-job permissions including Codecov OIDC upload access."""
+        return {
+            **super().job_matrix_health_checks_permissions(),
+            **self.permission_id_token(write=True),
+        }
+
+    @override
     def steps_matrix_health_checks(self) -> list[dict[str, Any]]:
         """Return the matrix job steps, extended with a Codecov upload step.
 
@@ -35,19 +43,17 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
             Step using `codecov/codecov-action@<ref>`.
 
         Note:
-            The upload token always comes from a `CODECOV_TOKEN` repository
-            secret, so it must be configured for the upload to succeed. Since
-            this workflow also runs for Dependabot pull requests, the secret
-            must be added to both the Actions and Dependabot secret stores.
+            Uploads authenticate with GitHub OIDC instead of a repository
+            secret.
         """
         return self.step(
             self.step_upload_coverage_report,
             uses=self.codecov_action(),
             with_={
                 "files": ProjectTester.I.report_file().as_posix(),
-                "token": self.insert_codecov_token(),
                 "fail_ci_if_error": "true",
                 "skip_validation": "true",
+                "use_oidc": "true",
             },
         )
 
@@ -58,19 +64,3 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
             Tuple of action name, pinned commit SHA, and release tag.
         """
         return self.action_from_resource(self.codecov_action, resources)
-
-    def insert_codecov_token(self) -> str:
-        """Return the `${{ secrets.CODECOV_TOKEN }}` expression.
-
-        Returns:
-            GitHub Actions expression for the `CODECOV_TOKEN` secret.
-        """
-        return self.insert_expression(self.codecov_token_var())
-
-    def codecov_token_var(self) -> str:
-        """Return the raw secrets expression for `CODECOV_TOKEN`.
-
-        Returns:
-            The `"secrets.CODECOV_TOKEN"` expression string.
-        """
-        return self.secrets_var(ProjectTester.I.access_token_key())
