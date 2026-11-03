@@ -48,7 +48,7 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         """
         return self.step(
             self.step_upload_coverage_report,
-            uses=self.codecov_action(),
+            uses=self.action_codecov(),
             with_={
                 "files": ProjectTester.I.report_file().as_posix(),
                 "fail_ci_if_error": "true",
@@ -57,10 +57,10 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
             },
         )
 
-    def codecov_action(self) -> tuple[str, str, str]:
+    def action_codecov(self) -> tuple[str, str, str]:
         """Return action metadata for `codecov/codecov-action`.
 
         Returns:
             Tuple of action name, pinned commit SHA, and release tag.
         """
-        return self.action_from_resource(self.codecov_action, resources)
+        return self.action_from_resource(self.action_codecov, resources)

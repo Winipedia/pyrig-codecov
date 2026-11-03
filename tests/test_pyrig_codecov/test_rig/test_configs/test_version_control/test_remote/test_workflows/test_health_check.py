@@ -12,13 +12,13 @@ from pyrig_codecov.rig.configs.version_control.remote.workflows.health_check imp
 class TestHealthCheckWorkflowConfigFile:
     """Test class."""
 
-    def test_codecov_action(self) -> None:
+    def test_action_codecov(self) -> None:
         """Test method."""
-        assert HealthCheckWorkflowConfigFile.I.codecov_action() == tuple(
-            resource_content("CODECOV_ACTION", resources).splitlines(),
+        assert HealthCheckWorkflowConfigFile.I.action_codecov() == tuple(
+            resource_content("ACTION_CODECOV", resources).splitlines(),
         )
 
-        action, ref, tag = HealthCheckWorkflowConfigFile.I.codecov_action()
+        action, ref, tag = HealthCheckWorkflowConfigFile.I.action_codecov()
         assert f'"uses": "{action}@{ref}"  # {tag}' in read_text_utf8(
             HealthCheckWorkflowConfigFile.I.path(),
         )
