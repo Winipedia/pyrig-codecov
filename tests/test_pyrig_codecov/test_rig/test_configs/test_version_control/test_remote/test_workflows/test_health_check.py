@@ -25,10 +25,10 @@ class TestHealthCheckWorkflowConfigFile:
             HealthCheckWorkflowConfigFile.I.path(),
         )
 
-    def test_artifact_name(self) -> None:
+    def test_coverage_artifact_name(self) -> None:
         """Test method."""
         workflow = HealthCheckWorkflowConfigFile.I
-        assert workflow.artifact_name("ubuntu-latest", "3.12") == (
+        assert workflow.coverage_artifact_name("ubuntu-latest", "3.12") == (
             "coverage-ubuntu-latest-3.12"
         )
 

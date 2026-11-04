@@ -56,7 +56,7 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         """
         return self.step_upload_artifact(
             self.step_upload_coverage_report,
-            name=self.artifact_name(
+            name=self.coverage_artifact_name(
                 self.insert_matrix_os(),
                 self.insert_matrix_python_version(),
             ),
@@ -81,7 +81,7 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         """
         return self.step_download_artifact(
             self.step_download_coverage_reports,
-            pattern=self.artifact_name("*", "*"),
+            pattern=self.coverage_artifact_name("*", "*"),
             path=self.coverage_reports_dir(),
             merge_multiple=False,
         )
@@ -109,7 +109,7 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         """
         return self.action_from_resource(self.action_codecov, resources)
 
-    def artifact_name(self, os: str, python_version: str) -> str:
+    def coverage_artifact_name(self, os: str, python_version: str) -> str:
         """Return a name identifying a matrix OS and Python version."""
         return f"coverage-{os}-{python_version}"
 
