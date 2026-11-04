@@ -57,7 +57,7 @@ Drop-in [pyrig](https://github.com/Winipedia/pyrig) plugin that wires
 
 - Enforces **100% coverage** as the pass threshold.
 - Generates `coverage.xml` alongside your normal test run.
-- Adds a Codecov upload step to the CI health-check workflow.
+- Adds an isolated Codecov upload job to the CI health-check workflow.
 - Adds `coverage.xml` to your version control ignore list.
 - Adds a Codecov badge to your README.
 
@@ -86,9 +86,11 @@ The plugin subclasses pyrig base classes:
 
 - **`ProjectTester`** — overrides the coverage threshold and badge URLs, and
   adds a report format/file for the Codecov upload step.
-- **`HealthCheckWorkflowConfigFile`** — appends a
-  commit-pinned `codecov/codecov-action` step to the matrix health-check job
-  and grants the job permission to request an OIDC token.
+- **`HealthCheckWorkflowConfigFile`** — stores each matrix report with
+  commit-pinned `actions/upload-artifact`, using a unique OS/Python artifact
+  name. A separate job downloads this run's reports with commit-pinned
+  `actions/download-artifact`, keeping them in separate subdirectories, then
+  publishes them with commit-pinned `codecov/codecov-action`.
 
 ## API Reference
 

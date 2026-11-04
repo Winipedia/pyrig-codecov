@@ -1,5 +1,8 @@
-"""Codecov coverage-upload step for the health check CI workflow."""
+"""Generate a health-check workflow that uploads matrix coverage to Codecov."""
 
+from collections.abc import Callable
+from pathlib import Path
+from types import MethodType
 from typing import Any, override
 
 from pyrig.rig.configs.version_control.remote.workflows.health_check import (
@@ -11,56 +14,105 @@ from pyrig_codecov.rig.tools.testing.project import ProjectTester
 
 
 class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
-    """Health check workflow extended with a Codecov coverage upload step."""
+    """Store matrix reports and upload them to Codecov in a separate job."""
 
     @override
-    def job_matrix_health_checks_permissions(self) -> dict[str, Any]:
-        """Return matrix-job permissions including Codecov OIDC upload access."""
-        return {
-            **super().job_matrix_health_checks_permissions(),
-            **self.permission_id_token(write=True),
-        }
+    def job_health_check_needs(self) -> tuple[MethodType, ...]:
+        """Wait for coverage publishing before the aggregate job runs."""
+        return (*super().job_health_check_needs(), self.job_upload_coverage)
+
+    @override
+    def jobs(self) -> tuple[Callable[[], dict[str, Any]], ...]:
+        """Place the upload job after the matrix test job."""
+        jobs = list(super().jobs())
+        jobs.insert(
+            jobs.index(self.job_matrix_health_checks) + 1,
+            self.job_upload_coverage,
+        )
+        return tuple(jobs)
 
     @override
     def steps_matrix_health_checks(self) -> list[dict[str, Any]]:
-        """Return the matrix job steps, extended with a Codecov upload step.
-
-        Returns:
-            The base class steps plus a final step that uploads the
-            coverage report to Codecov.
-        """
+        """Add coverage artifact storage after the matrix test steps."""
         return [
             *super().steps_matrix_health_checks(),
             self.step_upload_coverage_report(),
         ]
 
+    def job_upload_coverage(self) -> dict[str, Any]:
+        """Build the OIDC-enabled job that uploads matrix reports to Codecov."""
+        return self.job(
+            self.job_upload_coverage,
+            needs=(self.job_matrix_health_checks,),
+            permissions=self.job_upload_coverage_permissions(),
+            steps=self.steps_upload_coverage(),
+            timeout_minutes=30,
+        )
+
     def step_upload_coverage_report(self) -> dict[str, Any]:
-        """Build a step that uploads the coverage report to Codecov.
+        """Store this matrix job's coverage XML as an artifact.
 
-        Fails the CI job if the upload fails.
+        Fail if the coverage report file is missing.
+        """
+        return self.step_upload_artifact(
+            self.step_upload_coverage_report,
+            name=self.artifact_name(
+                self.insert_matrix_os(),
+                self.insert_matrix_python_version(),
+            ),
+            path=ProjectTester.I.report_file(),
+        )
 
-        Returns:
-            Step using `codecov/codecov-action@<ref>`.
+    def job_upload_coverage_permissions(self) -> dict[str, Any]:
+        """Return the OIDC token permission required by Codecov."""
+        return self.permission_id_token(write=True)
 
-        Note:
-            Uploads authenticate with GitHub OIDC instead of a repository
-            secret.
+    def steps_upload_coverage(self) -> list[dict[str, Any]]:
+        """Download and upload reports."""
+        return [
+            self.step_download_coverage_reports(),
+            self.step_upload_coverage(),
+        ]
+
+    def step_download_coverage_reports(self) -> dict[str, Any]:
+        """Download this run's reports into separate artifact directories.
+
+        Separate directories prevent identically named reports from overwriting.
+        """
+        return self.step_download_artifact(
+            self.step_download_coverage_reports,
+            pattern=self.artifact_name("*", "*"),
+            path=self.coverage_reports_dir(),
+            merge_multiple=False,
+        )
+
+    def step_upload_coverage(self) -> dict[str, Any]:
+        """Upload reports from the artifact directory using OIDC.
+
+        Fail the job if the upload fails.
         """
         return self.step(
-            self.step_upload_coverage_report,
+            self.step_upload_coverage,
             uses=self.action_codecov(),
             with_={
-                "files": ProjectTester.I.report_file().as_posix(),
+                "directory": self.coverage_reports_dir().as_posix(),
                 "fail_ci_if_error": "true",
-                "skip_validation": "true",
                 "use_oidc": "true",
             },
         )
 
     def action_codecov(self) -> tuple[str, str, str]:
-        """Return action metadata for `codecov/codecov-action`.
+        """Return the name, pinned commit SHA, and release tag for Codecov.
 
         Returns:
-            Tuple of action name, pinned commit SHA, and release tag.
+            Metadata for `codecov/codecov-action`.
         """
         return self.action_from_resource(self.action_codecov, resources)
+
+    def artifact_name(self, os: str, python_version: str) -> str:
+        """Return a name identifying a matrix OS and Python version."""
+        return f"coverage-{os}-{python_version}"
+
+    def coverage_reports_dir(self) -> Path:
+        """Return the directory containing downloaded coverage artifacts."""
+        return Path("coverage-reports")

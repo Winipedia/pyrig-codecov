@@ -57,8 +57,8 @@ your project.
 
 ## What it adds
 
-- **Coverage upload** — a step in the CI health-check workflow that sends your
-  coverage report to Codecov.
+- **Coverage upload** — matrix tests store coverage artifacts; a separate CI
+  job sends all reports to Codecov with OIDC authentication.
 - **Coverage badge** — a Codecov badge showing your current coverage.
 - **100% threshold** — raises the required coverage to 100%.
 
