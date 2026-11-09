@@ -2,7 +2,6 @@
 
 from collections.abc import Callable
 from pathlib import Path
-from types import MethodType
 from typing import Any, override
 
 from pyrig.rig.configs.version_control.remote.workflows.health_check import (
@@ -17,14 +16,9 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
     """Store matrix reports and upload them to Codecov in a separate job."""
 
     @override
-    def job_health_check_needs(self) -> tuple[MethodType, ...]:
-        """Wait for coverage publishing before the aggregate job runs."""
-        return (*super().job_health_check_needs(), self.job_upload_coverage)
-
-    @override
-    def jobs(self) -> tuple[Callable[[], dict[str, Any]], ...]:
-        """Place the upload job after the matrix test job."""
-        jobs = list(super().jobs())
+    def jobs_health_check(self) -> tuple[Callable[[], dict[str, Any]], ...]:
+        """Place the coverage upload immediately after the matrix health checks."""
+        jobs = list(super().jobs_health_check())
         jobs.insert(
             jobs.index(self.job_matrix_health_checks) + 1,
             self.job_upload_coverage,
@@ -63,7 +57,7 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
             path=ProjectTester.I.report_file(),
         )
 
-    def job_upload_coverage_permissions(self) -> dict[str, Any]:
+    def job_upload_coverage_permissions(self) -> dict[str, str]:
         """Return the OIDC token permission required by Codecov."""
         return self.permission_id_token(write=True)
 

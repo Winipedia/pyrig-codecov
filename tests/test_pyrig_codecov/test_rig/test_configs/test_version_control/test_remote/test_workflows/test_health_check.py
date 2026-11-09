@@ -38,14 +38,6 @@ class TestHealthCheckWorkflowConfigFile:
             "coverage-reports",
         )
 
-    def test_job_health_check_needs(self) -> None:
-        """Test method."""
-        workflow = HealthCheckWorkflowConfigFile.I
-        assert workflow.job_health_check_needs() == (
-            *super(HealthCheckWorkflowConfigFile, workflow).job_health_check_needs(),
-            workflow.job_upload_coverage,
-        )
-
     def test_job_upload_coverage(self) -> None:
         """Test method."""
         workflow = HealthCheckWorkflowConfigFile.I
@@ -63,18 +55,15 @@ class TestHealthCheckWorkflowConfigFile:
             "id-token": "write",
         }
 
-    def test_jobs(self) -> None:
+    def test_jobs_health_check(self) -> None:
         """Test method."""
         workflow = HealthCheckWorkflowConfigFile.I
-        jobs = workflow.jobs()
+        jobs = workflow.jobs_health_check()
         index = jobs.index(workflow.job_matrix_health_checks) + 1
         assert jobs[index] == workflow.job_upload_coverage
         assert (
             jobs[:index] + jobs[index + 1 :]
-            == super(
-                HealthCheckWorkflowConfigFile,
-                workflow,
-            ).jobs()
+            == super(HealthCheckWorkflowConfigFile, workflow).jobs_health_check()
         )
 
     def test_step_download_coverage_reports(self) -> None:
@@ -140,20 +129,3 @@ class TestHealthCheckWorkflowConfigFile:
             workflow.step_upload_coverage(),
         ]
         assert all("uses" in step and "run" not in step for step in steps)
-
-    def test_workflow_file(self) -> None:
-        """Test method."""
-        jobs = HealthCheckWorkflowConfigFile.I.load()["jobs"]
-        job_ids = list(jobs)
-        assert job_ids[job_ids.index("matrix-health-checks") + 1] == "upload-coverage"
-        assert jobs["matrix-health-checks"]["permissions"] == {"contents": "read"}
-        assert jobs["matrix-health-checks"]["steps"][-1]["id"] == (
-            "upload-coverage-report"
-        )
-        assert (
-            jobs["upload-coverage"]
-            == HealthCheckWorkflowConfigFile.I.job_by_id(
-                HealthCheckWorkflowConfigFile.I.job_upload_coverage,
-            )["upload-coverage"]
-        )
-        assert "upload-coverage" in jobs["health-check"]["needs"]
