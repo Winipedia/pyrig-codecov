@@ -1,6 +1,6 @@
 [project]
 name = "pyrig-codecov"
-version = "5.4.4"
+version = "5.4.5"
 description = "A pyrig plugin that integrates codecov."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -27,7 +27,7 @@ classifiers = [
   "Typing :: Typed",
 ]
 dependencies = [
-  "pyrig>=19.20.0",
+  "pyrig>=19.29.0",
 ]
 
 [project.urls]
