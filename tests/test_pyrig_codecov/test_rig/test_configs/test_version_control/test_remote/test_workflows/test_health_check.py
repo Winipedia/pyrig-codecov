@@ -52,6 +52,7 @@ class TestHealthCheckWorkflowConfigFile:
     def test_job_upload_coverage_permissions(self) -> None:
         """Test method."""
         assert HealthCheckWorkflowConfigFile.I.job_upload_coverage_permissions() == {
+            "contents": "read",
             "id-token": "write",
         }
 
@@ -125,6 +126,7 @@ class TestHealthCheckWorkflowConfigFile:
         workflow = HealthCheckWorkflowConfigFile.I
         steps = workflow.steps_upload_coverage()
         assert steps == [
+            workflow.step_checkout_repository(),
             workflow.step_download_coverage_reports(),
             workflow.step_upload_coverage(),
         ]

@@ -58,12 +58,20 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         )
 
     def job_upload_coverage_permissions(self) -> dict[str, str]:
-        """Return the OIDC token permission required by Codecov."""
-        return self.permission_id_token(write=True)
+        """Return the checkout read and Codecov OIDC token permissions."""
+        return {
+            **self.permission_contents(),
+            **self.permission_id_token(write=True),
+        }
 
     def steps_upload_coverage(self) -> list[dict[str, Any]]:
-        """Download and upload reports."""
+        """Check out the repository, then download and upload reports.
+
+        Without checkout the Codecov uploader cannot map report paths to tracked
+        repository files.
+        """
         return [
+            self.step_checkout_repository(),
             self.step_download_coverage_reports(),
             self.step_upload_coverage(),
         ]
