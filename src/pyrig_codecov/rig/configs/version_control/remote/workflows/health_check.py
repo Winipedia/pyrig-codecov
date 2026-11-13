@@ -38,7 +38,7 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         return self.job(
             self.job_upload_coverage,
             needs=(self.job_matrix_health_checks,),
-            permissions=self.job_upload_coverage_permissions(),
+            permissions=self.permissions_job_upload_coverage(),
             steps=self.steps_upload_coverage(),
             timeout_minutes=30,
         )
@@ -57,7 +57,7 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
             path=ProjectTester.I.report_file(),
         )
 
-    def job_upload_coverage_permissions(self) -> dict[str, str]:
+    def permissions_job_upload_coverage(self) -> dict[str, str]:
         """Return the checkout read and Codecov OIDC token permissions."""
         return {
             **self.permission_contents(),

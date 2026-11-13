@@ -46,15 +46,8 @@ class TestHealthCheckWorkflowConfigFile:
         assert job["runs-on"] == "ubuntu-latest"
         assert job["timeout-minutes"] == 30  # noqa: PLR2004
         assert "strategy" not in job
-        assert job["permissions"] == workflow.job_upload_coverage_permissions()
+        assert job["permissions"] == workflow.permissions_job_upload_coverage()
         assert job["steps"] == workflow.steps_upload_coverage()
-
-    def test_job_upload_coverage_permissions(self) -> None:
-        """Test method."""
-        assert HealthCheckWorkflowConfigFile.I.job_upload_coverage_permissions() == {
-            "contents": "read",
-            "id-token": "write",
-        }
 
     def test_jobs_health_check(self) -> None:
         """Test method."""
@@ -66,6 +59,13 @@ class TestHealthCheckWorkflowConfigFile:
             jobs[:index] + jobs[index + 1 :]
             == super(HealthCheckWorkflowConfigFile, workflow).jobs_health_check()
         )
+
+    def test_permissions_job_upload_coverage(self) -> None:
+        """Test method."""
+        assert HealthCheckWorkflowConfigFile.I.permissions_job_upload_coverage() == {
+            "contents": "read",
+            "id-token": "write",
+        }
 
     def test_step_download_coverage_reports(self) -> None:
         """Test method."""
