@@ -47,7 +47,7 @@ class TestHealthCheckWorkflowConfigFile:
         assert job["timeout-minutes"] == 30  # noqa: PLR2004
         assert "strategy" not in job
         assert job["permissions"] == workflow.permissions_job_upload_coverage()
-        assert job["steps"] == workflow.steps_upload_coverage()
+        assert job["steps"] == workflow.steps_configs(workflow.steps_upload_coverage())
 
     def test_jobs_health_check(self) -> None:
         """Test method."""
@@ -83,8 +83,6 @@ class TestHealthCheckWorkflowConfigFile:
         """Test method."""
         step = HealthCheckWorkflowConfigFile.I.step_upload_coverage()
         assert isinstance(step, dict)
-        assert "id" in step
-        assert "name" in step
         assert "uses" in step
         assert "with" in step
         assert step["with"] == {
@@ -113,21 +111,24 @@ class TestHealthCheckWorkflowConfigFile:
             HealthCheckWorkflowConfigFile,
             workflow,
         ).steps_matrix_health_checks()
-        assert steps == [
-            *base_steps,
-            workflow.step_upload_coverage_report(),
-        ]
+        assert workflow.steps_configs(steps) == workflow.steps_configs(
+            (*base_steps, workflow.step_upload_coverage_report),
+        )
         assert not any(
-            step.get("uses", "").startswith("codecov/codecov-action@") for step in steps
+            step.get("uses", "").startswith("codecov/codecov-action@")
+            for step in workflow.steps_configs(steps)
         )
 
     def test_steps_upload_coverage(self) -> None:
         """Test method."""
         workflow = HealthCheckWorkflowConfigFile.I
         steps = workflow.steps_upload_coverage()
-        assert steps == [
-            workflow.step_checkout_repository(),
-            workflow.step_download_coverage_reports(),
-            workflow.step_upload_coverage(),
-        ]
-        assert all("uses" in step and "run" not in step for step in steps)
+        assert steps == (
+            workflow.step_checkout_repository,
+            workflow.step_download_coverage_reports,
+            workflow.step_upload_coverage,
+        )
+        assert all(
+            "uses" in step and "run" not in step
+            for step in workflow.steps_configs(steps)
+        )

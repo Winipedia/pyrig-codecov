@@ -26,17 +26,16 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         return tuple(jobs)
 
     @override
-    def steps_matrix_health_checks(self) -> list[dict[str, Any]]:
+    def steps_matrix_health_checks(self) -> tuple[Callable[[], dict[str, Any]], ...]:
         """Add coverage artifact storage after the matrix test steps."""
-        return [
+        return (
             *super().steps_matrix_health_checks(),
-            self.step_upload_coverage_report(),
-        ]
+            self.step_upload_coverage_report,
+        )
 
     def job_upload_coverage(self) -> dict[str, Any]:
         """Build the OIDC-enabled job that uploads matrix reports to Codecov."""
         return self.job(
-            self.job_upload_coverage,
             needs=(self.job_matrix_health_checks,),
             permissions=self.permissions_job_upload_coverage(),
             steps=self.steps_upload_coverage(),
@@ -49,7 +48,6 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         Fail if the coverage report file is missing.
         """
         return self.step_upload_artifact(
-            self.step_upload_coverage_report,
             name=self.coverage_artifact_name(
                 self.insert_matrix_os(),
                 self.insert_matrix_python_version(),
@@ -64,17 +62,17 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
             **self.permission_id_token(write=True),
         }
 
-    def steps_upload_coverage(self) -> list[dict[str, Any]]:
+    def steps_upload_coverage(self) -> tuple[Callable[[], dict[str, Any]], ...]:
         """Check out the repository, then download and upload reports.
 
         Without checkout the Codecov uploader cannot map report paths to tracked
         repository files.
         """
-        return [
-            self.step_checkout_repository(),
-            self.step_download_coverage_reports(),
-            self.step_upload_coverage(),
-        ]
+        return (
+            self.step_checkout_repository,
+            self.step_download_coverage_reports,
+            self.step_upload_coverage,
+        )
 
     def step_download_coverage_reports(self) -> dict[str, Any]:
         """Download this run's reports into separate artifact directories.
@@ -82,7 +80,6 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         Separate directories prevent identically named reports from overwriting.
         """
         return self.step_download_artifact(
-            self.step_download_coverage_reports,
             pattern=self.coverage_artifact_name("*", "*"),
             path=self.coverage_reports_dir(),
             merge_multiple=False,
@@ -94,7 +91,6 @@ class HealthCheckWorkflowConfigFile(BaseHealthCheckWorkflowConfigFile):
         Fail the job if the upload fails.
         """
         return self.step(
-            self.step_upload_coverage,
             uses=self.action_codecov(),
             with_={
                 "directory": self.coverage_reports_dir().as_posix(),
