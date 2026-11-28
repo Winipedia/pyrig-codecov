@@ -17,7 +17,7 @@ class TestHealthCheckWorkflowConfigFile:
     def test_action_codecov(self) -> None:
         """Test method."""
         assert HealthCheckWorkflowConfigFile.I.action_codecov() == tuple(
-            resource_content("ACTION_CODECOV", resources).splitlines(),
+            resource_content("action_codecov", resources).splitlines(),
         )
 
         action, ref, tag = HealthCheckWorkflowConfigFile.I.action_codecov()
